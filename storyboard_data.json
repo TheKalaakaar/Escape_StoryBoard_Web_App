@@ -1,5 +1,41 @@
 [
   {
+    "shotNumber": 0,
+    "sceneNumber": 0,
+    "location": "None",
+    "action": "Blenk Screen with two circles",
+    "clockSpeed": "0x",
+    "shotType": "None",
+    "cameraMovement": "None",
+    "sounds": "Radio Static",
+    "duration": "SHORT, SHARP CUT",
+    "imagePath": "images/shot_1.jpg"
+  },
+  {
+    "shotNumber": 0.1,
+    "sceneNumber": 0,
+    "location": "None",
+    "action": "Title Card, ESCAPE",
+    "clockSpeed": "0x",
+    "shotType": "None",
+    "cameraMovement": "None",
+    "sounds": "Radio Static",
+    "duration": "SHORT, SHARP CUT",
+    "imagePath": "images/shot_2.jpg"
+  },
+  {
+    "shotNumber": 0.2,
+    "sceneNumber": 0,
+    "location": "None",
+    "action": "Text card, DAY 6939",
+    "clockSpeed": "0x",
+    "shotType": "None",
+    "cameraMovement": "None",
+    "sounds": "None",
+    "duration": "SHORT, SHARP CUT",
+    "imagePath": "images/shot_3.jpg"
+  },
+  {
     "shotNumber": 1,
     "sceneNumber": 1,
     "location": "Bedroom",

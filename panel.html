@@ -31,17 +31,18 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const shotNumberParam = urlParams.get('shot');
-    const shotNumber = parseInt(shotNumberParam);
+    const shotNumber = parseFloat(shotNumberParam); // Changed to parseFloat
 
     fetch('storyboard_data.json')
       .then(response => response.json())
       .then(storyboardData => {
-        const currentShotIndex = storyboardData.findIndex(shot => shot.shotNumber === shotNumber);
+        // Find the shot using parseFloat for comparison as well
+        const currentShotIndex = storyboardData.findIndex(shot => parseFloat(shot.shotNumber) === shotNumber);
         const currentShot = storyboardData[currentShotIndex];
 
         if (currentShot) {
           document.getElementById('panel-image').src = currentShot.imagePath;
-          document.getElementById('shot-number').textContent = currentShot.shotNumber;
+          document.getElementById('shot-number').textContent = currentShot.shotNumber; // Keep original shotNumber as string
           document.getElementById('scene-number').textContent = currentShot.sceneNumber;
           document.getElementById('location').textContent = currentShot.location;
           document.getElementById('action').textContent = currentShot.action;
@@ -59,7 +60,7 @@
 
           if (prevShotIndex >= 0) {
             const prevShot = storyboardData[prevShotIndex];
-            prevShotBtn.href = `panel.html?shot=${prevShot.shotNumber}`;
+            prevShotBtn.href = `panel.html?shot=${prevShot.shotNumber}`; // Use original shotNumber (could be decimal)
             prevShotBtn.classList.remove('disabled');
           } else {
             prevShotBtn.classList.add('disabled');
@@ -67,21 +68,21 @@
 
           if (nextShotIndex < storyboardData.length) {
             const nextShot = storyboardData[nextShotIndex];
-            nextShotBtn.href = `panel.html?shot=${nextShot.shotNumber}`;
+            nextShotBtn.href = `panel.html?shot=${nextShot.shotNumber}`; // Use original shotNumber (could be decimal)
             nextShotBtn.classList.remove('disabled');
           } else {
             nextShotBtn.classList.add('disabled');
           }
 
-          // Keyboard Navigation
+          // Keyboard Navigation (No change needed here)
           document.addEventListener('keydown', function(event) {
             if (event.key === 'ArrowLeft') {
               if (!prevShotBtn.classList.contains('disabled')) {
-                prevShotBtn.click(); // Simulate click on previous button
+                prevShotBtn.click();
               }
             } else if (event.key === 'ArrowRight') {
               if (!nextShotBtn.classList.contains('disabled')) {
-                nextShotBtn.click(); // Simulate click on next button
+                nextShotBtn.click();
               }
             }
           });
