@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Storyboard Gallery</title>
+  <link rel="stylesheet" href="css/styles.css"> </head>
+<body>
+  <h1>Storyboard Gallery</h1>
+  <div id="gallery-container">
+    <!-- Storyboard thumbnails will be inserted here by JavaScript -->
+  </div>
+
+  <script>
+    fetch('storyboard_data.json')
+      .then(response => response.json())
+      .then(storyboardData => {
+        const galleryContainer = document.getElementById('gallery-container');
+
+        storyboardData.forEach(shot => {
+          const shotLink = document.createElement('a');
+          shotLink.href = `panel.html?shot=${shot.shotNumber}`; // Link to panel page, passing shot number
+          shotLink.classList.add('gallery-item'); // For CSS styling
+
+          const shotImage = document.createElement('img');
+          shotImage.src = shot.imagePath;
+          shotImage.alt = `Shot ${shot.shotNumber} - Scene ${shot.sceneNumber} - ${shot.location}`; // Alt text for accessibility
+
+          shotLink.appendChild(shotImage);
+          galleryContainer.appendChild(shotLink);
+        });
+      });
+  </script>
+</body>
+</html>

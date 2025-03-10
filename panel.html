@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Storyboard Panel Details</title>
+  <link rel="stylesheet" href="css/styles.css"> </head>
+<body>
+  <div class="panel-container">
+    <div class="panel-image-container">
+      <img id="panel-image" src="" alt="Storyboard Panel Image">
+      <div class="panel-navigation"> <a href="#" id="prev-shot-btn" class="nav-btn disabled">
+          <div class="triangle left"></div>
+        </a>
+        <a href="#" id="next-shot-btn" class="nav-btn disabled">
+          <div class="triangle right"></div>
+        </a>
+      </div>
+    </div>
+    <div class="panel-details">
+      <h1>Shot <span id="shot-number"></span></h1>
+      <p><strong>Scene:</strong> <span id="scene-number"></span></p>
+      <p><strong>Location:</strong> <span id="location"></span></p>
+      <p><strong>Action:</strong> <span id="action"></span></p> <p><strong>Shot Type:</strong> <span id="shot-type"></span></p>
+      <p><strong>Camera Movement:</strong> <span id="camera-movement"></span></p>
+      <p><strong>Clock Speed:</strong> <span id="clock-speed"></span></p>
+      <p><strong>Duration:</strong> <span id="duration"></span></p>
+      <p><strong>Sounds:</strong> <span id="sounds"></span></p>
+      <a href="index.html">Back to Gallery</a>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const shotNumberParam = urlParams.get('shot');
+    const shotNumber = parseInt(shotNumberParam);
+
+    fetch('storyboard_data.json')
+      .then(response => response.json())
+      .then(storyboardData => {
+        const currentShotIndex = storyboardData.findIndex(shot => shot.shotNumber === shotNumber);
+        const currentShot = storyboardData[currentShotIndex];
+
+        if (currentShot) {
+          document.getElementById('panel-image').src = currentShot.imagePath;
+          document.getElementById('shot-number').textContent = currentShot.shotNumber;
+          document.getElementById('scene-number').textContent = currentShot.sceneNumber;
+          document.getElementById('location').textContent = currentShot.location;
+          document.getElementById('action').textContent = currentShot.action;
+          document.getElementById('shot-type').textContent = currentShot.shotType;
+          document.getElementById('camera-movement').textContent = currentShot.cameraMovement;
+          document.getElementById('clock-speed').textContent = currentShot.clockSpeed;
+          document.getElementById('duration').textContent = currentShot.duration;
+          document.getElementById('sounds').textContent = currentShot.sounds;
+
+          const prevShotBtn = document.getElementById('prev-shot-btn');
+          const nextShotBtn = document.getElementById('next-shot-btn');
+
+          const prevShotIndex = currentShotIndex - 1;
+          const nextShotIndex = currentShotIndex + 1;
+
+          if (prevShotIndex >= 0) {
+            const prevShot = storyboardData[prevShotIndex];
+            prevShotBtn.href = `panel.html?shot=${prevShot.shotNumber}`;
+            prevShotBtn.classList.remove('disabled');
+          } else {
+            prevShotBtn.classList.add('disabled');
+          }
+
+          if (nextShotIndex < storyboardData.length) {
+            const nextShot = storyboardData[nextShotIndex];
+            nextShotBtn.href = `panel.html?shot=${nextShot.shotNumber}`;
+            nextShotBtn.classList.remove('disabled');
+          } else {
+            nextShotBtn.classList.add('disabled');
+          }
+
+          // Keyboard Navigation
+          document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+              if (!prevShotBtn.classList.contains('disabled')) {
+                prevShotBtn.click(); // Simulate click on previous button
+              }
+            } else if (event.key === 'ArrowRight') {
+              if (!nextShotBtn.classList.contains('disabled')) {
+                nextShotBtn.click(); // Simulate click on next button
+              }
+            }
+          });
+
+
+        } else {
+          document.getElementById('panel-details').innerHTML = "<p>Shot not found.</p><a href='index.html'>Back to Gallery</a>";
+        }
+      });
+  </script>
+</body>
+</html>

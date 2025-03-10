@@ -1,0 +1,203 @@
+/* Dark Mode CSS for Storyboard Website */
+
+/* General Dark Mode Styles */
+body {
+  font-family: sans-serif;
+  margin: 20px;
+  background-color: #121212; /* Dark background */
+  color: #f0f0f0; /* Light text */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #f0f0f0; /* Light heading text */
+}
+
+a {
+  color: #bb86fc; /* Purple-ish link color (accent color) */
+}
+
+a:hover {
+  color: #d8b3ff; /* Lighter purple on hover */
+}
+
+/* Gallery Page Styles - Dark Mode */
+#gallery-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.gallery-item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #333; /* Darker border for images */
+  border-radius: 5px;
+  transition: transform 0.2s ease-in-out;
+  background-color: #212121; /* Slightly lighter background for gallery items */
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+  border-color: #bb86fc; /* Accent border on hover */
+}
+
+
+/* Panel Page Styles - Dark Mode */
+.panel-container {
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #333; /* Darker border for panel container */
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4); /* Adjusted shadow for dark mode */
+  background-color: #212121; /* Background for panel container */
+}
+
+.panel-image-container {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.panel-image-container img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #444; /* Slightly lighter border for panel image */
+  border-radius: 5px;
+  background-color: #121212; /* Darker background for panel image area */
+}
+
+.panel-details {
+  flex: 1;
+}
+
+.panel-details h1 {
+  text-align: left;
+  margin-top: 0;
+  color: #f0f0f0; /* Light heading text */
+}
+
+.panel-details p {
+  margin-bottom: 8px;
+  color: #e0e0e0; /* Slightly darker light text for paragraphs */
+}
+
+.panel-details strong {
+  font-weight: bold;
+  color: #f0f0f0; /* Light bold text */
+}
+
+.panel-details a {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 8px 15px;
+  background-color: #333; /* Darker button background */
+  color: #f0f0f0; /* Light button text */
+  text-decoration: none;
+  border-radius: 5px;
+  border: 1px solid #555; /* Darker button border */
+}
+
+.panel-details a:hover {
+  background-color: #555; /* Lighter dark button background on hover */
+  border-color: #bb86fc; /* Accent border on hover */
+}
+
+
+/* Panel Navigation Buttons - Dark Mode */
+.panel-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.nav-btn {
+  display: block;
+  width: 40px;
+  height: 40px;
+  background-color: #333; /* Dark button background */
+  border-radius: 5px;
+  text-decoration: none;
+  color: transparent;
+  position: relative;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  border: 1px solid #555; /* Dark button border */
+}
+
+.nav-btn:hover {
+  background-color: #555; /* Lighter dark button background on hover */
+  border-color: #bb86fc; /* Accent border on hover */
+}
+
+.nav-btn.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.triangle.left {
+  border-width: 8px 12px 8px 0;
+  border-color: transparent #f0f0f0 transparent transparent; /* Light triangle color */
+  left: 50%;
+  margin-left: -6px;
+}
+
+.triangle.right {
+  border-width: 8px 0 8px 12px;
+  border-color: transparent transparent transparent #f0f0f0; /* Light triangle color */
+  right: 50%;
+  margin-right: -6px;
+}
+
+
+/* --- Media Queries for Responsiveness - Dark Mode (No changes needed for layout, just colors if desired) --- */
+@media (max-width: 768px) {
+  /* Mobile Screen - Dark Mode - Layout is already handled, colors are inherited */
+  .panel-container {
+    flex-direction: column;
+  }
+
+  .panel-image-container {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .panel-navigation {
+    justify-content: center;
+  }
+
+  .panel-navigation a {
+    margin: 0 10px;
+  }
+
+  #gallery-container {
+    display: block;
+  }
+
+  .gallery-item {
+    margin-bottom: 15px;
+  }
+
+  .gallery-item img {
+    border-radius: 0;
+  }
+}
