@@ -2,8 +2,9 @@
 <html>
 <head>
   <title>Storyboard Panel Details</title>
-  <link rel="stylesheet" href="css/styles.css"> </head>
+  <link rel="stylesheet" href="css/styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 <body>
   <div class="panel-container">
     <div class="panel-image-container">
@@ -32,18 +33,17 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const shotNumberParam = urlParams.get('shot');
-    const shotNumber = parseFloat(shotNumberParam); // Changed to parseFloat
+    const shotNumber = parseFloat(shotNumberParam);
 
     fetch('storyboard_data.json')
       .then(response => response.json())
       .then(storyboardData => {
-        // Find the shot using parseFloat for comparison as well
         const currentShotIndex = storyboardData.findIndex(shot => parseFloat(shot.shotNumber) === shotNumber);
         const currentShot = storyboardData[currentShotIndex];
 
         if (currentShot) {
           document.getElementById('panel-image').src = currentShot.imagePath;
-          document.getElementById('shot-number').textContent = currentShot.shotNumber; // Keep original shotNumber as string
+          document.getElementById('shot-number').textContent = currentShot.shotNumber;
           document.getElementById('scene-number').textContent = currentShot.sceneNumber;
           document.getElementById('location').textContent = currentShot.location;
           document.getElementById('action').textContent = currentShot.action;
@@ -61,7 +61,7 @@
 
           if (prevShotIndex >= 0) {
             const prevShot = storyboardData[prevShotIndex];
-            prevShotBtn.href = `panel.html?shot=${prevShot.shotNumber}`; // Use original shotNumber (could be decimal)
+            prevShotBtn.href = `panel.html?shot=${prevShot.shotNumber}`;
             prevShotBtn.classList.remove('disabled');
           } else {
             prevShotBtn.classList.add('disabled');
@@ -69,7 +69,7 @@
 
           if (nextShotIndex < storyboardData.length) {
             const nextShot = storyboardData[nextShotIndex];
-            nextShotBtn.href = `panel.html?shot=${nextShot.shotNumber}`; // Use original shotNumber (could be decimal)
+            nextShotBtn.href = `panel.html?shot=${nextShot.shotNumber}`;
             nextShotBtn.classList.remove('disabled');
           } else {
             nextShotBtn.classList.add('disabled');
@@ -87,6 +87,36 @@
               }
             }
           });
+
+          // **Swipe Navigation**
+          let touchStartX = null;
+          const swipeThreshold = 50; // Minimum swipe distance to trigger navigation
+
+          document.addEventListener('touchstart', function(event) {
+            touchStartX = event.changedTouches[0].screenX;
+          }, false);
+
+          document.addEventListener('touchend', function(event) {
+            if (touchStartX === null) {
+              return; // Not a swipe, probably a tap
+            }
+
+            const touchEndX = event.changedTouches[0].screenX;
+            const swipeDistance = touchEndX - touchStartX;
+            touchStartX = null; // Reset for next swipe
+
+            if (swipeDistance > swipeThreshold) {
+              // Swipe Right (go to previous)
+              if (!prevShotBtn.classList.contains('disabled')) {
+                prevShotBtn.click();
+              }
+            } else if (swipeDistance < -swipeThreshold) {
+              // Swipe Left (go to next)
+              if (!nextShotBtn.classList.contains('disabled')) {
+                nextShotBtn.click();
+              }
+            }
+          }, false);
 
 
         } else {
